@@ -7,7 +7,10 @@ authors = [
     { name = "Milansuman", email = "milansuman2016@gmail.com" }
 ]
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "tree-sitter>=0.25.2",
+    "tree-sitter-python>=0.25.0",
+]
 
 [project.scripts]
 autodocs = "autodocs:main"
@@ -15,3 +18,8 @@ autodocs = "autodocs:main"
 [build-system]
 requires = ["uv_build>=0.9.25,<0.10.0"]
 build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "rich>=14.2.0",
+]

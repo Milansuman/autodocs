@@ -29,4 +29,7 @@ def test_parse_module_classes() -> None:
     assert classes[0]["name"] == "Human" and len(classes[0]["methods"]) == 8
     assert classes[1]["name"] == "Superhero" and "Human" in classes[1]["bases"]
     assert "classmethod" in classes[0]["methods"][3]["decorators"]
+
+def test_parse_module_docstring() -> None:
+    assert "Multiline strings" in parser.get_module_docstring()
     

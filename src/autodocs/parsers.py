@@ -53,6 +53,32 @@ class PythonParser:
             raise ValueError("No file has been parsed yet.")
         return self.tree
     
+    def get_module_docstring(self) -> str | None:
+        """
+        Get the module-level docstring from the parsed python file.
+        
+        :return: The module docstring, or None if not found.
+        :rtype: str | None
+        :raises ValueError: If no file has been parsed yet.
+        """
+        if self.tree is None:
+            raise ValueError("No file has been parsed yet.")
+        
+        QUERY = """
+        (module
+            (expression_statement
+                (string) @docstring))
+        """
+
+        docstring_query = tree_sitter.Query(self.language, QUERY)
+        doc_query_cursor = tree_sitter.QueryCursor(docstring_query)
+        
+        for match in doc_query_cursor.matches(self.tree.root_node):
+            match_node = match[1]
+            return match_node["docstring"][0].text.decode("utf8").strip('"""').strip("'''")
+        
+        return None
+    
     def get_constants(self) -> list[Constant]:
         """
         Get all constant definitions from the parsed python file.

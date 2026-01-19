@@ -36,8 +36,8 @@ class PythonParser:
         """
         Parse a python file and save the parse tree.
         
-        :param code: The contents of the python file to parse.
-        :type code: str
+        Args:
+            code: The contents of the python file to parse.
         """
         self.tree = self.parser.parse(bytes(code, "utf8"))
 
@@ -45,9 +45,11 @@ class PythonParser:
         """
         Get the parse tree of the last parsed python file.
         
-        :return: The parse tree.
-        :rtype: tree_sitter.Tree
-        :raises ValueError: If no file has been parsed yet.
+        Returns:
+            The parse tree.
+        
+        Raises:
+            ValueError: If no file has been parsed yet.
         """
         if self.tree is None:
             raise ValueError("No file has been parsed yet.")
@@ -57,9 +59,11 @@ class PythonParser:
         """
         Get the module-level docstring from the parsed python file.
         
-        :return: The module docstring, or None if not found.
-        :rtype: str | None
-        :raises ValueError: If no file has been parsed yet.
+        Returns:
+            The module docstring, or None if not found.
+        
+        Raises:
+            ValueError: If no file has been parsed yet.
         """
         if self.tree is None:
             raise ValueError("No file has been parsed yet.")
@@ -83,9 +87,11 @@ class PythonParser:
         """
         Get all constant definitions from the parsed python file.
         
-        :return: A list of constant definitions.
-        :rtype: list[Constant]
-        :raises ValueError: If no file has been parsed yet.
+        Returns:
+            A list of constant definitions.
+        
+        Raises:
+            ValueError: If no file has been parsed yet.
         """
         if self.tree is None:
             raise ValueError("No file has been parsed yet.")
@@ -118,8 +124,11 @@ class PythonParser:
         """
         Get all module functions from the parsed python file.
         
-        :return: A list of Function definitions with their docstrings.
-        :rtype: list[Function]
+        Returns:
+            A list of Function definitions with their docstrings.
+        
+        Raises:
+            ValueError: If no file has been parsed yet.
         """
 
         if self.tree is None:
@@ -174,7 +183,12 @@ class PythonParser:
     def get_classes(self) -> list[Class]:
         """
         Get all class definitions from the parsed python file.
-        :return: A list of Class definitions with their docstrings and methods.
+        
+        Returns:
+            A list of Class definitions with their docstrings and methods.
+        
+        Raises:
+            ValueError: If no file has been parsed yet.
         """
         if self.tree is None:
             raise ValueError("No file has been parsed yet.")

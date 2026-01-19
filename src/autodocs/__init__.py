@@ -3,9 +3,9 @@ from rich import print
 
 def main() -> None:
     parser = PythonParser()
-    with open("src/autodocs/parsers.py", "r") as f:
+    with open("tests/simple_python_module/example.py", "r") as f:
         parser.parse(f.read())
-        #print(parser.get_constants())
+        # print(len(parser.get_constants()))
         #print(parser.get_functions())
         print(parser.get_classes())
 

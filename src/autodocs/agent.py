@@ -256,6 +256,8 @@ def categorize_file_node(state: AgentContext) -> AgentContext:
     file_symbols = state["file_symbols"]
     file_topics = state.get("file_topics", {})
     file_relevance = state.get("file_relevance", {})
+    file_docstrings = state.get("file_docstrings", {})
+    
     topics = state.get("topics", [])
     
     if current_index >= len(file_paths):
@@ -263,6 +265,7 @@ def categorize_file_node(state: AgentContext) -> AgentContext:
     
     current_file = file_paths[current_index]
     symbols = file_symbols.get(current_file, "")
+    docstring = file_docstrings.get(current_file, "")
     
     if not symbols:
         file_topics[current_file] = "general"
@@ -276,14 +279,16 @@ def categorize_file_node(state: AgentContext) -> AgentContext:
     
     # If topics are provided, categorize the file and check relevance
     if topics:
+        docstring_section = f"\nModule docstring:\n{docstring}\n" if docstring else ""
+        
         categorization_prompt = f"""You are categorizing code files into topics and determining relevance.
 
 Available topics: {', '.join(topics)}
-
+{docstring_section}
 File symbols:
 {symbols}
 
-Based on the symbols, determine:
+Based on the module docstring and symbols, determine:
 1. The MOST appropriate topic from the list above
 2. Whether this file contains symbols that would be USEFUL to document for users interested in that topic
 
@@ -435,8 +440,8 @@ Your documentation should:
 
 Format:
 - Descriptive title reflecting the functionality (not filename)
-- One-sentence overview of what this helps users accomplish
-- 2-3 practical code examples showing common use cases
+- Overview of what the module provides for users
+- Practical examples on how to use the features with code examples and descriptions
 - Keep it short and actionable
 
 DO NOT:

@@ -2,7 +2,7 @@ from autodocs.parsers import PythonParser
 
 parser = PythonParser()
 
-with open("tests/simple_python_module/example.py", "r") as f:
+with open("tests/simple_python_example/example.py", "r") as f:
     parser.parse(f.read())
 
 

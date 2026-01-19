@@ -1,6 +1,37 @@
 import os
 from .parsers import PythonParser, Constant, Function, Class
 
+def find_config_files(path: str = ".") -> list[str]:
+    """Find potential configuration files in the project root.
+
+    Args:
+        path (str): The root directory to search.
+
+    Returns:
+        list[str]: List of potential config file paths.
+    """
+    config_files = []
+    potential_files = [
+        "pyproject.toml",
+        "setup.py",
+        "setup.cfg",
+        "package.json",
+        "Cargo.toml",
+        "go.mod",
+        "pom.xml",
+        "build.gradle",
+        "composer.json",
+        "README.md",
+        "README.rst"
+    ]
+    
+    for filename in potential_files:
+        filepath = os.path.join(path, filename)
+        if os.path.exists(filepath):
+            config_files.append(filepath)
+    
+    return config_files
+
 def find_project_sources(extensions: list[str], path: str =".") -> list[str]:
     """Find all source files in the given path with the specified extensions.
 
@@ -18,7 +49,7 @@ def find_project_sources(extensions: list[str], path: str =".") -> list[str]:
         dirs[:] = [d for d in dirs if not d.startswith('.')]
         
         for file in files:
-            if file.endswith(tuple(extensions)):
+            if file.endswith(tuple(extensions)) and not file.startswith("_"):
                 matched_files.append(os.path.join(root, file))
 
     return matched_files
@@ -212,6 +243,18 @@ def save_documentation(path: str, documentation: str) -> None:
     
     with open(path, "w") as file:
         file.write(documentation)
+
+def read_file(path: str) -> str:
+    """Read the contents of a file.
+
+    Args:
+        path (str): Path to the file.
+
+    Returns:
+        str: Contents of the file.
+    """
+    with open(path, "r") as file:
+        return file.read()
     
 tools = {
     "find_project_sources": "Find all source files in the given path with the specified extensions.",
@@ -220,5 +263,7 @@ tools = {
     "get_module_classes": "Extract module-level classes from the given file.",
     "get_file_symbols": "Get a summary of all symbols (variables, functions, classes) in the given file.",
     "save_documentation": "Save the generated documentation to a file.",
-    "get_module_docstring": "Extract the module-level docstring from the given file."
+    "get_module_docstring": "Extract the module-level docstring from the given file.",
+    "find_config_files": "Find potential configuration files in the project root.",
+    "read_file": "Read the contents of a file."
 }

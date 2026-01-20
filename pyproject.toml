@@ -12,6 +12,7 @@ dependencies = [
     "langchain-groq>=1.1.1",
     "langgraph>=1.0.6",
     "netra-sdk>=0.1.62",
+    "pydantic>=2.12.5",
     "python-dotenv>=1.2.1",
     "rich>=14.2.0",
     "tree-sitter>=0.25.2",

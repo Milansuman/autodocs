@@ -11,22 +11,17 @@ def main() -> None:
     parser.add_argument("--output", default="docs", help="Output directory for documentation")
     parser.add_argument("--extensions", nargs="+", default=[".py"], help="File extensions to process")
     parser.add_argument("--topics", nargs="+", help="Topics to organize documentation by (e.g., 'parsers' 'tools' 'agent')")
+    parser.add_argument("--extrapolate", action="store_true", help="Automatically extrapolate topics from the codebase")
     
     args = parser.parse_args()
-    
-    print(f"[bold blue]Generating documentation for: {args.path}[/bold blue]")
-    if args.topics:
-        print(f"[dim]Organizing by topics: {', '.join(args.topics)}[/dim]")
-    
-    result = generate_documentation(
-        project_path=args.path,
-        codebase_extensions=args.extensions,
+
+    generate_documentation(
+        project_root=args.path,
         output_dir=args.output,
-        topics=args.topics
+        extensions=args.extensions,
+        topics=args.topics,
+        extrapolate=args.extrapolate
     )
-    
-    print(f"[bold green]✓ Documentation generated in: {args.output}[/bold green]")
-    print(f"[dim]Processed {len(result['file_paths'])} files[/dim]")
 
 if __name__ == "__main__":
     main()

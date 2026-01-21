@@ -1,4 +1,4 @@
-from autodocs.parsers import PythonParser
+from autodocs.parsers.python import PythonParser
 
 parser = PythonParser()
 

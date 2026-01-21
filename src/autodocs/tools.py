@@ -1,5 +1,5 @@
 import os
-from .parsers import PythonParser, Constant, Function, Class
+from .parsers.python import PythonParser, Constant, Function, Class
 
 def find_config_files(path: str = ".") -> list[str]:
     """Find potential configuration files in the project root.

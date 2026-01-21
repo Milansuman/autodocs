@@ -1,10 +1,8 @@
-from .parsers import PythonParser
 from .agent import generate_documentation
-from rich import print
+import argparse
 
 def main() -> None:
     """Main entry point for autodocs CLI."""
-    import argparse
     
     parser = argparse.ArgumentParser(description="Generate documentation for your codebase")
     parser.add_argument("--path", default=".", help="Path to the project to document")
